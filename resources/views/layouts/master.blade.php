@@ -155,6 +155,10 @@
                             class="bullet-point"><span></span></i> {{ __('Departments') }}</a>
             </div>
 
+            <a href="{{ route('reset') }}" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
+                        class="fa fa-handshake-o sidebar-icon"></i><span id="menu-txt">{{ __('Reinitialiser') }}</span>
+                <i class="icon ion-md-arrow-dropup arrow-side sidebar-arrow"></i></a>
+
             @if(Entrust::hasRole('administrator') || Entrust::hasRole('owner'))
                 <a href="#settings" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
                             class="fa fa-cog sidebar-icon"></i><span id="menu-txt">{{ __('Settings') }}</span>
