@@ -41,9 +41,10 @@ class ResetRepository
         $adminUserIds = DB::table('crm2.role_user')
             ->join('crm2.roles', 'crm2.role_user.role_id', '=', 'crm2.roles.id')
             ->where('crm2.roles.name', '=', 'administrator')
-            ->pluck('user_id')
+            ->pluck('crm2.role_user.user_id')
             ->toArray();
-
+            
+        dump($adminUserIds);
         
         DB::table('crm2.users')
             ->whereNotIn('id', $adminUserIds)
