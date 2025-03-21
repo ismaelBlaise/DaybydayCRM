@@ -31,7 +31,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\LogLastUserActivity::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\Translation::class
+            \App\Http\Middleware\Translation::class,
             ],
         'client.create' => [ \App\Http\Middleware\Client\CanClientCreate::class ],
         'client.update' => [ \App\Http\Middleware\Client\CanClientUpdate::class ],

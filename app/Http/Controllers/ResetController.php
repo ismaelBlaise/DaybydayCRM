@@ -11,7 +11,8 @@ class ResetController extends Controller
     protected $resetRepository;
 
     public function __construct(ResetRepository $resetRepository)
-    {
+    {   
+        $this->middleware("can.reset.database");
         $this->resetRepository = $resetRepository;
     }
 
