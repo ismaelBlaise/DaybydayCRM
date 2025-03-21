@@ -154,13 +154,13 @@
                    class="list-group-item childlist"> <i
                             class="bullet-point"><span></span></i> {{ __('Departments') }}</a>
             </div>
-
+            @if(Entrust::hasRole('administrator') || Entrust::hasRole('owner'))
             <a href="{{ route('reset') }}" class="list-group-item" data-bs-toggle="collapse" data-bs-parent="#MainMenu">
                 <i class="fa fa-handshake-o sidebar-icon"></i>
                 <span id="menu-txt">{{ __('Réinitialiser') }}</span>
                 <i class="icon ion-md-arrow-dropup arrow-side sidebar-arrow"></i>
             </a>
-
+            @endif
 
             @if(Entrust::hasRole('administrator') || Entrust::hasRole('owner'))
                 <a href="#settings" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
