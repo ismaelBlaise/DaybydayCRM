@@ -40,21 +40,21 @@ class ResetRepository
 
         $adminUserIds = DB::table('crm2.role_user')
             ->join('crm2.roles', 'crm2.role_user.role_id', '=', 'crm2.roles.id')
-            ->where('crm2.roles.external_id', '=', '9db1a62b-944c-4cb2-9632-150bf7425734')
+            ->where('crm2.roles.name', '=', 'administrator')
             ->pluck('user_id')
             ->toArray();
 
-        // Supprimer les utilisateurs non administrateurs
+        
         DB::table('crm2.users')
             ->whereNotIn('id', $adminUserIds)
             ->delete();
 
-        // Supprimer les rôles des utilisateurs non administrateurs
+        
         DB::table('crm2.role_user')
             ->whereNotIn('user_id', $adminUserIds)
             ->delete();
 
-        // Supprimer les associations dans department_user
+        
         DB::table('crm2.department_user')
             ->whereNotIn('user_id', $adminUserIds)
             ->delete();
