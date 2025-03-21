@@ -2,12 +2,29 @@
 
 namespace App\Http\Controllers;
 
-class ResetController extends Controller{
-    public function __construct()
+use App\Repositories\ResetRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+
+class ResetController extends Controller
+{
+    protected $resetRepository;
+
+    public function __construct(ResetRepository $resetRepository)
     {
-        $this->middleware('user.is.admin', ['only' => ['index', 'create', 'destroy', 'show', 'update']]);
-        $this->middleware('is.demo', ['except' => ['index', 'create', 'show', 'indexData']]);
+        $this->resetRepository = $resetRepository;
     }
 
-}
+    
+    public function index(): View
+    {
+        return view('reset');
+    }
 
+    
+    public function resetDatabase(): RedirectResponse
+    {
+        $this->resetRepository->resetDatabase();
+        return redirect()->route('reset.index')->with('success', 'Base de données réinitialisée avec succès.');
+    }
+}
