@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ResetRepository;
+use App\Repositories\Reset\ResetRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
