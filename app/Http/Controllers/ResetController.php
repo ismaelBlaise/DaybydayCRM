@@ -12,20 +12,20 @@ class ResetController extends Controller
 
     public function __construct(ResetRepository $resetRepository)
     {   
-        $this->middleware("can.reset.database");
+        // $this->middleware("can.reset.database");
         $this->resetRepository = $resetRepository;
     }
 
     
     public function index(): View
     {
-        return view('reset');
+        return view('dashbord');
     }
 
     
     public function resetDatabase(): RedirectResponse
     {
         $this->resetRepository->resetDatabase();
-        return redirect()->route('reset.index')->with('success', 'Base de données réinitialisée avec succès.');
+        return redirect()->route('dashboard')->with('success', 'Base de données réinitialisée avec succès.');
     }
 }

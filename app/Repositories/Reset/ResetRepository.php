@@ -33,34 +33,31 @@ class ResetRepository
         DB::table('crm2.contacts')->truncate();
         DB::table('crm2.invoice_lines')->truncate();
         DB::table('crm2.appointments')->truncate();
-        DB::table('crm2.payements')->truncate();
+        DB::table('crm2.payments')->truncate();
         DB::table('crm2.invoices')->truncate();
         DB::table('crm2.offers')->truncate();
         DB::table('crm2.clients')->truncate();
 
+        $adminUserIds = DB::table('crm2.role_user')
+            ->join('crm2.roles', 'crm2.role_user.role_id', '=', 'crm2.roles.id')
+            ->where('crm2.roles.external_id', '=', '9db1a62b-944c-4cb2-9632-150bf7425734')
+            ->pluck('user_id')
+            ->toArray();
+
+        // Supprimer les utilisateurs non administrateurs
         DB::table('crm2.users')
-            ->whereNotIn('id', function ($query) {
-                $query->select('user_id')
-                    ->from('crm2.role_user')
-                    ->join('crm2.roles', 'crm2.role_user.role_id', '=', 'crm2.roles.id')
-                    ->where('crm2.roles.name', '=', 'administrator');
-            })->delete();
+            ->whereNotIn('id', $adminUserIds)
+            ->delete();
 
+        // Supprimer les rôles des utilisateurs non administrateurs
         DB::table('crm2.role_user')
-            ->whereNotIn('user_id', function ($query) {
-                $query->select('user_id')
-                    ->from('crm2.role_user')
-                    ->join('crm2.roles', 'crm2.role_user.role_id', '=', 'crm2.roles.id')
-                    ->where('crm2.roles.name', '=', 'administrator');
-            })->delete();
+            ->whereNotIn('user_id', $adminUserIds)
+            ->delete();
 
+        // Supprimer les associations dans department_user
         DB::table('crm2.department_user')
-            ->whereIn('user_id', function ($query) {
-                $query->select('user_id')
-                    ->from('crm2.role_user')
-                    ->join('crm2.roles', 'crm2.role_user.role_id', '=', 'crm2.roles.id')
-                    ->where('crm2.roles.name', '=', 'administrator');
-            })->delete();
+            ->whereNotIn('user_id', $adminUserIds)
+            ->delete();
 
         // Suppression optionnelle de certaines tables
         // DB::table('crm2.products')->truncate();
